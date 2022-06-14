@@ -17,7 +17,9 @@ class SmoobuBooking:
     """
 
     overdue_delta = timedelta(days=30)
-    direct_booking_id = 940882
+    # 940882: Direct reservation (manually defined)
+    # 940885: From the website (aka "Homepage")
+    direct_booking_ids = (940882, 940885)
 
     def __init__(self, booking: dict):
         self._inner_booking = booking
@@ -45,7 +47,7 @@ class SmoobuBooking:
         return not self.fully_paid and (self.arrival - date.today()) <= self.overdue_delta
 
     def is_direct_booking(self) -> bool:
-        return self.channel_id == self.direct_booking_id
+        return self.channel_id in self.direct_booking_ids
 
 
 class SmoobuGuest:
